@@ -169,10 +169,17 @@ const Pizza = () => {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={previousStep} style={{ borderRadius: "50%", padding: "8px", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "transparent" }}>&larr;</button>
         <figure style={{ textAlign: "center" }}>
-          <img src={icon} style={{ width: "30px", height: "30px", border: "1px solid black", borderRadius: "50%", padding: "10px" }} alt="" />
+          <img src={icon} style={{ width: "30px", height: "30px", border: "1px solid black", borderRadius: "50%", padding: "10px" ,color:"black" }} alt="" />
           <figcaption>{iconText}</figcaption>
         </figure>
-        <button onClick={nextStep} style={{ borderRadius: "50%", padding: "8px", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "transparent" }}>&rarr;</button>
+        <button onClick={nextStep}
+         style={{ borderRadius: "50%",
+          padding: "8px",
+           paddingLeft: "10px",
+            paddingRight: "10px",
+             backgroundColor: "transparent",
+             color:"black"
+             }}>&rarr;</button>
       </div>
     </div>
   );
