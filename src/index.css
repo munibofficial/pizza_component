@@ -87,6 +87,7 @@ button:focus-visible {
 }
 
 .main-content {
+  background-color: #ffffff;
   grid-area: main;
   padding: 10px;
   text-align: center;
