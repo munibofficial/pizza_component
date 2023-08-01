@@ -8,6 +8,12 @@ import sauceIcon from '../assets/images/pizzaSauce.png'
 import tomatoSauceCrust from '../assets/images/crustTomatoSauce.png'
 import tomatoSauceThin from '../assets/images/thinTomatoSauce.png'
 import redSauceCrust from '../assets/images/crustRedSauce.png'
+import redSauceThin from '../assets/images/thinRedSauce.png'
+import bbqSauceThin from '../assets/images/thinBbqSauce.png'
+import bbqSauceCrust from '../assets/images/crustBbqSauce.png'
+
+
+
 
 
 const Pizza = () => {
@@ -17,22 +23,35 @@ const Pizza = () => {
   const [icon, setIcon] = useState(sizeicon);
   const [iconText,setIconText] = useState('Pizza Size');
   const[image,setImage]=useState(pizzaImage)
+  const [sauce, setSauce] = useState('');
+
 
   const setSauceImage= (sauceType) => {
-    setDough(sauceType);
+    setSauce(sauceType);
   
-  if (sauceType === 'Tomato'){
-    setImage(tomatoSauceCrust)
-  } else if (sauceType === 'Red'){
-    setImage(redSauceCrust)
-  }
-
-};
+    if(dough === 'Crust') {
+      if (sauceType === 'Tomato') {
+        setImage(tomatoSauceCrust);
+      } else if (sauceType === 'Red') {
+        setImage(redSauceCrust);
+      }else if (sauceType === 'BBQ') {
+        setImage(bbqSauceCrust);
+      }
+    } else if (dough === 'Thin') {
+      if (sauceType === 'Tomato') {
+        setImage(tomatoSauceThin);
+      } else if (sauceType === 'Red') {
+        setImage(redSauceThin);
+      }else if (sauceType === 'BBQ') {
+        setImage(bbqSauceThin);
+      }
+    }
+  };
   
   const setDoughImage = (doughType) => {
-    setDough(doughType); // Changed this line
+    setDough(doughType); 
+
   
-    // Update the image state based on the type of dough
     if (doughType === 'Thin') {
       setImage(doughThin);
       
@@ -64,7 +83,7 @@ const Pizza = () => {
         image: tomatoSauceCrust,
         buttons: ['Tomato', 'Red' , 'BBQ'],
         display: ['Tomato', 'Red' , 'BBQ'],
-        iconText: ['Piza Sauce'],
+        iconText: ['Pizza Sauce'],
         onClick: setSauceImage,
         icon: sauceIcon
       },
@@ -78,13 +97,26 @@ const Pizza = () => {
       setStep(step + 1);
       setIcon(stepContents[step+1].icon);
       setIconText(stepContents[step+1].iconText);
+      // setImage(stepContents[step+1].image);
 
-      if (dough === 'Thin') {
-        setImage(tomatoSauceThin);
-      } else if (dough === 'Crust') {
-        setImage(tomatoSauceCrust);
-      }
-
+        if(dough === 'Crust') {
+          if (sauce === 'Tomato') {
+            setImage(tomatoSauceCrust);
+          } else if (sauce === 'Red') {
+            setImage(redSauceCrust);
+          }else if (sauceType === 'BBQ') {
+            setImage(bbqSauceCrust);
+          }
+        } else if (dough === 'Thin') {
+          if (sauce === 'Tomato') {
+            setImage(tomatoSauceThin);
+          } else if (sauce === 'Red') {
+            setImage(redSauceThin);
+          }else if (sauce === 'BBQ') {
+            setImage(bbqSauceThin);
+          }
+        }
+      
     }
   };
 
@@ -93,7 +125,24 @@ const Pizza = () => {
       setStep(step - 1);
       setIcon(stepContents[step-1].icon);
       setIconText(stepContents[step-1].iconText);
-      setImage(stepContents[step-1].image);
+      // setImage(stepContents[step-1].image);
+      if(dough === 'Crust') {
+        if (sauce === 'Tomato') {
+          setImage(tomatoSauceCrust);
+        } else if (sauce === 'Red') {
+          setImage(redSauceCrust);
+        }else if (sauceType === 'BBQ') {
+          setImage(bbqSauceCrust);
+        }
+      } else if (dough === 'Thin') {
+        if (sauce === 'Tomato') {
+          setImage(tomatoSauceThin);
+        } else if (sauce === 'Red') {
+          setImage(redSauceThin);
+        }else if (sauce === 'BBQ') {
+          setImage(bbqSauceThin);
+        }
+      }
 
 
     }
