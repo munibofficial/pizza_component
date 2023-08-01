@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import pizzaImage from '../assets/images/pizzasize.png'
+import rightArrow from '../assets/images/rightSlide.svg'
+import leftArrow from '../assets/images/leftSlide.svg'
+
 import sizeicon from '../assets/images/expand.png'
 import doughIcon from '../assets/images/dough.png'
 import doughCrust from '../assets/images/crustDough.png'
@@ -167,19 +170,13 @@ const Pizza = () => {
         ))}
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button onClick={previousStep} style={{ borderRadius: "50%", padding: "8px", paddingLeft: "10px", paddingRight: "10px", backgroundColor: "transparent" }}>&larr;</button>
+      <button onClick={previousStep}><img src={leftArrow} alt="Left" /></button>
         <figure style={{ textAlign: "center" }}>
           <img src={icon} style={{ width: "30px", height: "30px", border: "1px solid black", borderRadius: "50%", padding: "10px" ,color:"black" }} alt="" />
           <figcaption>{iconText}</figcaption>
         </figure>
-        <button onClick={nextStep}
-         style={{ borderRadius: "50%",
-          padding: "8px",
-           paddingLeft: "10px",
-            paddingRight: "10px",
-             backgroundColor: "transparent",
-             color:"black"
-             }}>&rarr;</button>
+        <button onClick={previousStep}><img src={rightArrow} alt="Left" /></button>
+
       </div>
     </div>
   );
