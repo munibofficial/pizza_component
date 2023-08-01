@@ -4,6 +4,7 @@ import rightArrow from '../assets/images/rightSlide.svg'
 import leftArrow from '../assets/images/leftSlide.svg'
 import sizeicon from '../assets/images/expand.png'
 import doughIcon from '../assets/images/dough.png'
+import cheeseIcon from '../assets/images/cheese.png'
 import doughCrust from '../assets/images/crustDough.png'
 import doughThin from '../assets/images/thinDough.png'
 import sauceIcon from '../assets/images/pizzaSauce.png'
@@ -28,6 +29,23 @@ import thinTomatoBbq from '../assets/images/thinTomatoBbq.png'
 import thinBbqBbq from '../assets/images/thinBbqBbq.png'
 import thinRedBbq from '../assets/images/thinRedBbq.png'
 
+import MozzarellaGrilledBbqT from '../assets/images/grilledmozerela1.png'
+import MozzarellaGrilledTomatoT from '../assets/images/grilledmozerela2.png'
+import MozzarellaGrilledRedT from '../assets/images/grilledmozerela3.png'
+import MozzarellaGrilledBbqC from '../assets/images/grilledmozerela4.png'
+import MozzarellaGrilledRedC from '../assets/images/grilledmozerela5.png'
+import MozzarellaGrilledTomatoC from '../assets/images/grilledmozerela6.png'
+
+import CheddarGrilledBbqT from '../assets/images/grilledchadder1.png'
+import CheddarGrilledRedT from '../assets/images/grilledchadder2.png'
+import CheddarGrilledTomatoT from '../assets/images/grilledchadder3.png'
+import CheddarGrilledBbqC from '../assets/images/grilledchadder4.png'
+import CheddarGrilledTomatoC from '../assets/images/grilledchadder5.png'
+import CheddarGrilledRedC from '../assets/images/grilledchadder6.png'
+
+
+
+
 
 
 
@@ -44,6 +62,46 @@ const Pizza = () => {
   const [image, setImage] = useState(pizzaImage)
   const [sauce, setSauce] = useState('');
   const [Chicken , setChicken] = useState('');
+  const[cheese , setCheese] = useState('');
+
+  const cheeseImage = (cheeseType) =>{
+    setCheese(cheeseType);
+    if (dough === 'Crust' ) {
+      if (sauce === 'Tomato') {
+        if (cheeseType === 'Mozzarella')
+          setImage(MozzarellaGrilledTomatoC);
+        else if (cheeseType === 'Cheddar')
+          setImage(CheddarGrilledTomatoC);
+      } else if (sauce === 'Red') {
+        if (cheeseType === 'Mozzarella')
+          setImage(MozzarellaGrilledRedC);
+        else if (cheeseType === 'Cheddar')
+          setImage(CheddarGrilledRedC);
+      } else if (sauce === 'BBQ') {
+        if (cheeseType === 'Mozzarella')
+          setImage(MozzarellaGrilledBbqC);
+        else if (cheeseType === 'Cheddar')
+          setImage(CheddarGrilledBbqC);
+      }
+    } else if (dough === 'Thin' ) {
+      if (sauce === 'Tomato') {
+        if (cheeseType === 'Mozzarella')
+          setImage(MozzarellaGrilledTomatoT);
+        else if (cheeseType === 'Cheddar')
+          setImage(CheddarGrilledTomatoT);
+      } else if (sauce === 'Red') {
+        if (cheeseType === 'Mozzarella')
+          setImage(MozzarellaGrilledRedT);
+        else if (cheeseType === 'Cheddar')
+          setImage(CheddarGrilledRedT);
+      } else if (sauce === 'BBQ') {
+        if (cheeseType === 'Mozzarella')
+          setImage(MozzarellaGrilledBbqT);
+        else if (cheeseType === 'Cheddar')
+          setImage(CheddarGrilledBbqT);
+      }
+    }
+  };
 
   const ChickenImage = (chickenType) => {
     setChicken(chickenType);
@@ -126,7 +184,7 @@ const Pizza = () => {
       image: pizzaImage,
       buttons: ['S', 'M', 'L'],
       display: ['8 inch', '10 inch', '14 inch'],
-      iconText: ['Piza Size'],
+      iconText: ['Pizza Size'],
       onClick: setSize,
       icon: sizeicon
     },
@@ -134,7 +192,7 @@ const Pizza = () => {
       image: doughCrust,
       buttons: ['Thin', 'Crust'],
       display: ['Thin', 'Crust'],
-      iconText: ['Piza Dough'],
+      iconText: ['Pizza Dough'],
       onClick: setDoughImage,
       icon: doughIcon
     },
@@ -154,6 +212,14 @@ const Pizza = () => {
       onClick: ChickenImage,
       icon: chickenIcon
     },
+    {
+      image: tomatoSauceCrust,
+      buttons: ['Mozzarella', 'Cheddar'],
+      display: ['Mozzarella', 'Cheddar'],
+      iconText: ['Pizza Cheese'],
+      onClick: cheeseImage,
+      icon: cheeseIcon
+    },   
   ];
 
   const { buttons, display, onClick } = stepContents[step];
@@ -277,7 +343,7 @@ const Pizza = () => {
           height: "250px"
         }}
         alt="Pizza" />
-      <p><hr />
+      <p style={{fontSize:"20px" , fontWeight:"bold"}}><hr />
         {`Size: ${stepContents[0].display[stepContents[0].buttons.indexOf(size)]}`}</p>
       <div className="button-group">
         {buttons.map((button, index) => (
