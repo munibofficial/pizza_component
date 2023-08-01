@@ -5,6 +5,7 @@ import leftArrow from '../assets/images/leftSlide.svg'
 import sizeicon from '../assets/images/expand.png'
 import doughIcon from '../assets/images/dough.png'
 import cheeseIcon from '../assets/images/cheese.png'
+import toppingIcon from '../assets/images/pizza.png'
 import doughCrust from '../assets/images/crustDough.png'
 import doughThin from '../assets/images/thinDough.png'
 import sauceIcon from '../assets/images/pizzaSauce.png'
@@ -63,6 +64,20 @@ const Pizza = () => {
   const [sauce, setSauce] = useState('');
   const [Chicken , setChicken] = useState('');
   const[cheese , setCheese] = useState('');
+  const [toppings, setToppings] = useState([]);
+
+  const handleTopping = (topping) => {
+    setToppings((prevToppings) => {
+      if (prevToppings.includes(topping)) {
+        // If the topping is already selected, remove it
+        return prevToppings.filter((prevTopping) => prevTopping !== topping);
+      } else {
+        // If the topping is not selected, add it
+        return [...prevToppings, topping];
+      }
+    });
+  };
+  
 
   const cheeseImage = (cheeseType) =>{
     setCheese(cheeseType);
@@ -219,7 +234,15 @@ const Pizza = () => {
       iconText: ['Pizza Cheese'],
       onClick: cheeseImage,
       icon: cheeseIcon
-    },   
+    },
+    {
+      image: tomatoSauceCrust,
+      buttons: ['Pepperoni', 'Mushrooms','Bell peppers','Black olives'],
+      display: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
+      iconText: ['Pizza Topping'],
+      onClick: handleTopping,
+      icon: toppingIcon
+    },  
   ];
 
   const { buttons, display, onClick } = stepContents[step];
@@ -345,13 +368,31 @@ const Pizza = () => {
         alt="Pizza" />
       <p style={{fontSize:"20px" , fontWeight:"bold"}}><hr />
         {`Size: ${stepContents[0].display[stepContents[0].buttons.indexOf(size)]}`}</p>
-      <div className="button-group">
-        {buttons.map((button, index) => (
-          <button key={index} className="button" onClick={() => onClick(button)}>
-            {button}
-          </button>
-        ))}
-      </div>
+        {iconText[0] !== "Pizza Topping" ? (
+        <div className="button-group">
+          {buttons.map((button, index) => (
+            <button key={index} className="button" onClick={() => onClick(button)}>
+              {button}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="checkbox-group">
+          {buttons.map((button, index) => (
+            <div key={index}>
+              <input 
+                type="checkbox" 
+                id={`topping-${index}`} 
+                name={button} 
+                value={button} 
+                onChange={() => onClick(button)} 
+                checked={toppings.includes(button)}
+              />
+              <label htmlFor={`topping-${index}`}>{button}</label>
+            </div>
+          ))}
+        </div>
+      )}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={previousStep} style={{ backgroundColor: "transparent" }}><img src={leftArrow} alt="Left" /></button>
         <figure style={{ textAlign: "center" }}>
