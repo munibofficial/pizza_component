@@ -410,7 +410,7 @@ const Pizza = () => {
           <img src={icon} style={{ width: "30px", height: "30px", border: "1px solid black", borderRadius: "50%", padding: "10px", color: "black" }} alt="" />
           <figcaption>{iconText}</figcaption>
         </figure>
-        <button onClick={nextStep} style={{ backgroundColor: "transparent" }}><img src={rightArrow} alt="Right" /></button>
+        <button onClick={nextStep} style={{ backgroundColor: "transparent" , marginBottom:"4px" }}><img src={rightArrow} alt="Right" /></button>
 
       </div>
     </div>
