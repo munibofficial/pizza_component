@@ -44,6 +44,13 @@ import CheddarGrilledBbqC from '../assets/images/grilledchadder4.png'
 import CheddarGrilledTomatoC from '../assets/images/grilledchadder5.png'
 import CheddarGrilledRedC from '../assets/images/grilledchadder6.png'
 
+import pepperoni from '../assets/images/ingredients9.png';
+import mushrooms from '../assets/images/ingredients11.png';
+import bellPeppers from '../assets/images/ingredients10.png';
+import blackOlives from '../assets/images/blackOlives.png';
+
+
+//... in your Pizza component
 
 
 
@@ -55,7 +62,7 @@ import CheddarGrilledRedC from '../assets/images/grilledchadder6.png'
 
 
 const Pizza = () => {
-  const [size, setSize] = useState('S');
+  const [size, setSize] = useState('');
   const [step, setStep] = useState(0);
   const [dough, setDough] = useState('Thin');
   const [icon, setIcon] = useState(sizeicon);
@@ -65,6 +72,22 @@ const Pizza = () => {
   const [Chicken , setChicken] = useState('');
   const[cheese , setCheese] = useState('');
   const [toppings, setToppings] = useState([]);
+  const [price,setPrice] =useState('');
+  const toppingImages = {
+    'Pepperoni': pepperoni, 
+    'Mushrooms': mushrooms, 
+    'Bell peppers': bellPeppers, 
+    'Black olives': blackOlives
+  };
+
+  const setToppingImage = (toppingType) => {
+  if (toppings.includes(toppingType)) {
+    setToppings(toppings.filter(topping => topping !== toppingType));
+  } else {
+    setToppings([...toppings, toppingType]);
+  }
+};
+
 
   const handleTopping = (topping) => {
     setToppings((prevToppings) => {
@@ -199,8 +222,13 @@ const Pizza = () => {
       image: pizzaImage,
       buttons: ['S', 'M', 'L'],
       display: ['8 inch', '10 inch', '14 inch'],
+      prices: [10, 15, 20],
       iconText: ['Pizza Size'],
-      onClick: setSize,
+  
+      onClick: (size, index) => { 
+        setSize(size);
+        setPrice(['S', 'M', 'L'].indexOf(size) === 0 ? 10 : ['S', 'M', 'L'].indexOf(size) === 1 ? 15 : 20);
+      },
       icon: sizeicon
     },
     {
@@ -237,11 +265,11 @@ const Pizza = () => {
     },
     {
       image: tomatoSauceCrust,
-      buttons: ['Pepperoni', 'Mushrooms','Bell peppers','Black olives'],
-      display: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
-      iconText: ['Pizza Topping'],
-      onClick: handleTopping,
-      icon: toppingIcon
+    buttons: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
+    display: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
+    iconText: ['Pizza Topping'],
+    onClick: handleTopping,
+    icon: toppingIcon
     },  
   ];
 
@@ -253,46 +281,41 @@ const Pizza = () => {
       setIcon(stepContents[step + 1].icon);
       setIconText(stepContents[step + 1].iconText);
   
-      if (dough === 'Crust') {
+      if (dough === 'Crust' ) {
         if (sauce === 'Tomato') {
-          if(chickenType === 'Tikka')
-            setImage(crustTomatoTikka);
-          else if(chickenType === 'Grilled')
-            setImage(crustTomatoBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledTomatoC);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledTomatoC);
         } else if (sauce === 'Red') {
-          if(chickenType === 'Tikka')
-            setImage(crustRedTikka);
-          else if(chickenType === 'Grilled')
-            setImage(crustRedBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledRedC);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledRedC);
         } else if (sauce === 'BBQ') {
-          if(chickenType === 'Tikka')
-            setImage(crustBbqTikka);
-          else if(chickenType === 'Grilled')
-            setImage(crustBbqBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledBbqC);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledBbqC);
         }
-      } else if (dough === 'Thin') {
+      } else if (dough === 'Thin' ) {
         if (sauce === 'Tomato') {
-          if(chickenType === 'Tikka')
-            setImage(thinTomatoTikka);
-          else if(chickenType === 'Grilled')
-            setImage(thinTomatoBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledTomatoT);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledTomatoT);
         } else if (sauce === 'Red') {
-          if(chickenType === 'Tikka')
-            setImage(thinRedTikka);
-          else if(chickenType === 'Grilled')
-            setImage(thinRedBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledRedT);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledRedT);
         } else if (sauce === 'BBQ') {
-          if(chickenType === 'Tikka')
-            setImage(thinBbqTikka);
-          else if(chickenType === 'Grilled')
-            setImage(thinBbqBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledBbqT);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledBbqT);
         }
       }
-
-      
-
-
-
     }
   };
   
@@ -302,72 +325,60 @@ const Pizza = () => {
       setIcon(stepContents[step - 1].icon);
       setIconText(stepContents[step - 1].iconText);
     
-      // if (dough === 'Crust') {
-      //   if (sauce === 'Tomato') {
-      //     setImage(doughCrust);
-      //   } else if (sauce === 'Red') {
-      //     setImage(doughCrust);
-      //   } else if (sauce === 'BBQ') {
-      //     setImage(doughCrust);
-      //   }
-      // } else if (dough === 'Thin') {
-      //   if (sauce === 'Tomato') {
-      //     setImage(doughThin);
-      //   } else if (sauce === 'Red') {
-      //     setImage(doughThin);
-      //   } else if (sauce === 'BBQ') {
-      //     setImage(doughThin);
-      //   }
-      // }
-      if (dough === 'Crust') {
+      if (dough === 'Crust' ) {
         if (sauce === 'Tomato') {
-          if(chickenType === 'Tikka')
-            setImage(crustTomatoTikka);
-          else if(chickenType === 'Grilled')
-            setImage(crustTomatoBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledTomatoC);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledTomatoC);
         } else if (sauce === 'Red') {
-          if(chickenType === 'Tikka')
-            setImage(crustRedTikka);
-          else if(chickenType === 'Grilled')
-            setImage(crustRedBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledRedC);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledRedC);
         } else if (sauce === 'BBQ') {
-          if(chickenType === 'Tikka')
-            setImage(crustBbqTikka);
-          else if(chickenType === 'Grilled')
-            setImage(crustBbqBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledBbqC);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledBbqC);
         }
-      } else if (dough === 'Thin') {
+      } else if (dough === 'Thin' ) {
         if (sauce === 'Tomato') {
-          if(chickenType === 'Tikka')
-            setImage(thinTomatoTikka);
-          else if(chickenType === 'Grilled')
-            setImage(thinTomatoBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledTomatoT);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledTomatoT);
         } else if (sauce === 'Red') {
-          if(chickenType === 'Tikka')
-            setImage(thinRedTikka);
-          else if(chickenType === 'Grilled')
-            setImage(thinRedBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledRedT);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledRedT);
         } else if (sauce === 'BBQ') {
-          if(chickenType === 'Tikka')
-            setImage(thinBbqTikka);
-          else if(chickenType === 'Grilled')
-            setImage(thinBbqBbq);
+          if (cheeseType === 'Mozzarella')
+            setImage(MozzarellaGrilledBbqT);
+          else if (cheeseType === 'Cheddar')
+            setImage(CheddarGrilledBbqT);
         }
       }
     }
   };
 
+
   return (
-    <div className="pizza">
-      <h2>Custom Pizza</h2>
-      <img src={image}
-        style={{
-          width: "250px",
-          height: "250px"
-        }}
-        alt="Pizza" />
+    <div className="pizza" style={{ position: 'relative' }}>
+    <img src={image} alt="Pizza" style={{ position: 'relative', zIndex: 1 }} />
+    {toppings.map((topping, index) => (
+        <img 
+            key={index} 
+            src={toppingImages[topping]} 
+            alt={topping} 
+            style={{ position: 'absolute', top: 0, left: "10%", zIndex: 2 }}
+        />
+    ))}
       <p style={{fontSize:"20px" , fontWeight:"bold"}}><hr />
-        {`Size: ${stepContents[0].display[stepContents[0].buttons.indexOf(size)]}`}</p>
+      
+      {`Size: ${stepContents[0].display[stepContents[0].buttons.indexOf(size)]} - Price: $${price}`}</p>
+
         {iconText[0] !== "Pizza Topping" ? (
         <div className="button-group">
           {buttons.map((button, index) => (
