@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Summary from './Summary';
+import Steps from './Steps';
+
 import pizzaImage from '../assets/images/pizzasize.png'
 import rightArrow from '../assets/images/rightSlide.svg'
 import leftArrow from '../assets/images/leftSlide.svg'
@@ -50,43 +53,44 @@ import bellPeppers from '../assets/images/ingredients10.png';
 import blackOlives from '../assets/images/blackOlives.png';
 
 
-//... in your Pizza component
-
-
-
-
-
-
-
 
 
 
 const Pizza = () => {
-  const [size, setSize] = useState('');
+  const [size, setSize] = useState('S');
   const [step, setStep] = useState(0);
   const [dough, setDough] = useState('Thin');
   const [icon, setIcon] = useState(sizeicon);
   const [iconText, setIconText] = useState('Pizza Size');
   const [image, setImage] = useState(pizzaImage)
   const [sauce, setSauce] = useState('');
-  const [Chicken , setChicken] = useState('');
-  const[cheese , setCheese] = useState('');
+  const [chicken, setChicken] = useState('');
+  const [cheese, setCheese] = useState('');
   const [toppings, setToppings] = useState([]);
-  const [price,setPrice] =useState('');
+  const [isFinished, setIsFinished] = useState(false);
+
+  const [price, setPrice] = useState('8');
   const toppingImages = {
-    'Pepperoni': pepperoni, 
-    'Mushrooms': mushrooms, 
-    'Bell peppers': bellPeppers, 
+    'Pepperoni': pepperoni,
+    'Mushrooms': mushrooms,
+    'Bell peppers': bellPeppers,
     'Black olives': blackOlives
   };
-
+  const goToStep = (stepNumber) => {
+    setStep(stepNumber);
+    setIcon(stepContents[stepNumber].icon);
+    setIconText(stepContents[stepNumber].iconText);
+  };
+  const resetIsFinished = () => {
+    setIsFinished(false);
+  };
   const setToppingImage = (toppingType) => {
-  if (toppings.includes(toppingType)) {
-    setToppings(toppings.filter(topping => topping !== toppingType));
-  } else {
-    setToppings([...toppings, toppingType]);
-  }
-};
+    if (toppings.includes(toppingType)) {
+      setToppings(toppings.filter(topping => topping !== toppingType));
+    } else {
+      setToppings([...toppings, toppingType]);
+    }
+  };
 
 
   const handleTopping = (topping) => {
@@ -100,11 +104,11 @@ const Pizza = () => {
       }
     });
   };
-  
 
-  const cheeseImage = (cheeseType) =>{
+
+  const cheeseImage = (cheeseType) => {
     setCheese(cheeseType);
-    if (dough === 'Crust' ) {
+    if (dough === 'Crust') {
       if (sauce === 'Tomato') {
         if (cheeseType === 'Mozzarella')
           setImage(MozzarellaGrilledTomatoC);
@@ -121,7 +125,7 @@ const Pizza = () => {
         else if (cheeseType === 'Cheddar')
           setImage(CheddarGrilledBbqC);
       }
-    } else if (dough === 'Thin' ) {
+    } else if (dough === 'Thin') {
       if (sauce === 'Tomato') {
         if (cheeseType === 'Mozzarella')
           setImage(MozzarellaGrilledTomatoT);
@@ -143,39 +147,39 @@ const Pizza = () => {
 
   const ChickenImage = (chickenType) => {
     setChicken(chickenType);
-    
+
     if (dough === 'Crust') {
       if (sauce === 'Tomato') {
-        if(chickenType === 'Tikka')
+        if (chickenType === 'Tikka')
           setImage(crustTomatoTikka);
-        else if(chickenType === 'Grilled')
+        else if (chickenType === 'Grilled')
           setImage(crustTomatoBbq);
       } else if (sauce === 'Red') {
-        if(chickenType === 'Tikka')
+        if (chickenType === 'Tikka')
           setImage(crustRedTikka);
-        else if(chickenType === 'Grilled')
+        else if (chickenType === 'Grilled')
           setImage(crustRedBbq);
       } else if (sauce === 'BBQ') {
-        if(chickenType === 'Tikka')
+        if (chickenType === 'Tikka')
           setImage(crustBbqTikka);
-        else if(chickenType === 'Grilled')
+        else if (chickenType === 'Grilled')
           setImage(crustBbqBbq);
       }
     } else if (dough === 'Thin') {
       if (sauce === 'Tomato') {
-        if(chickenType === 'Tikka')
+        if (chickenType === 'Tikka')
           setImage(thinTomatoTikka);
-        else if(chickenType === 'Grilled')
+        else if (chickenType === 'Grilled')
           setImage(thinTomatoBbq);
       } else if (sauce === 'Red') {
-        if(chickenType === 'Tikka')
+        if (chickenType === 'Tikka')
           setImage(thinRedTikka);
-        else if(chickenType === 'Grilled')
+        else if (chickenType === 'Grilled')
           setImage(thinRedBbq);
       } else if (sauce === 'BBQ') {
-        if(chickenType === 'Tikka')
+        if (chickenType === 'Tikka')
           setImage(thinBbqTikka);
-        else if(chickenType === 'Grilled')
+        else if (chickenType === 'Grilled')
           setImage(thinBbqBbq);
       }
     }
@@ -224,11 +228,12 @@ const Pizza = () => {
       display: ['8 inch', '10 inch', '14 inch'],
       prices: [10, 15, 20],
       iconText: ['Pizza Size'],
-  
-      onClick: (size, index) => { 
+      onClick: (size) => {
         setSize(size);
         setPrice(['S', 'M', 'L'].indexOf(size) === 0 ? 10 : ['S', 'M', 'L'].indexOf(size) === 1 ? 15 : 20);
       },
+      
+      
       icon: sizeicon
     },
     {
@@ -265,12 +270,15 @@ const Pizza = () => {
     },
     {
       image: tomatoSauceCrust,
-    buttons: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
-    display: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
-    iconText: ['Pizza Topping'],
-    onClick: handleTopping,
-    icon: toppingIcon
-    },  
+      buttons: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
+      display: ['Pepperoni', 'Mushrooms', 'Bell peppers', 'Black olives'],
+      iconText: ['Pizza Topping'],
+      onClick: handleTopping,
+      icon: toppingIcon
+    },
+    
+    
+    
   ];
 
   const { buttons, display, onClick } = stepContents[step];
@@ -280,8 +288,8 @@ const Pizza = () => {
       setStep(step + 1);
       setIcon(stepContents[step + 1].icon);
       setIconText(stepContents[step + 1].iconText);
-  
-      if (dough === 'Crust' ) {
+
+      if (dough === 'Crust') {
         if (sauce === 'Tomato') {
           if (cheeseType === 'Mozzarella')
             setImage(MozzarellaGrilledTomatoC);
@@ -298,7 +306,7 @@ const Pizza = () => {
           else if (cheeseType === 'Cheddar')
             setImage(CheddarGrilledBbqC);
         }
-      } else if (dough === 'Thin' ) {
+      } else if (dough === 'Thin') {
         if (sauce === 'Tomato') {
           if (cheeseType === 'Mozzarella')
             setImage(MozzarellaGrilledTomatoT);
@@ -316,47 +324,50 @@ const Pizza = () => {
             setImage(CheddarGrilledBbqT);
         }
       }
+    } else {
+      setIsFinished(true); // Set isFinished to true when all steps are completed
     }
+
   };
-  
+
   const previousStep = () => {
     if (step > 0) {
       setStep(step - 1);
       setIcon(stepContents[step - 1].icon);
       setIconText(stepContents[step - 1].iconText);
-    
-      if (dough === 'Crust' ) {
+
+      if (dough === 'Crust') {
         if (sauce === 'Tomato') {
-          if (cheeseType === 'Mozzarella')
+          if (cheese === 'Mozzarella')
             setImage(MozzarellaGrilledTomatoC);
           else if (cheeseType === 'Cheddar')
             setImage(CheddarGrilledTomatoC);
         } else if (sauce === 'Red') {
-          if (cheeseType === 'Mozzarella')
+          if (cheese === 'Mozzarella')
             setImage(MozzarellaGrilledRedC);
-          else if (cheeseType === 'Cheddar')
+          else if (cheese === 'Cheddar')
             setImage(CheddarGrilledRedC);
         } else if (sauce === 'BBQ') {
           if (cheeseType === 'Mozzarella')
             setImage(MozzarellaGrilledBbqC);
-          else if (cheeseType === 'Cheddar')
+          else if (cheese === 'Cheddar')
             setImage(CheddarGrilledBbqC);
         }
-      } else if (dough === 'Thin' ) {
+      } else if (dough === 'Thin') {
         if (sauce === 'Tomato') {
           if (cheeseType === 'Mozzarella')
             setImage(MozzarellaGrilledTomatoT);
-          else if (cheeseType === 'Cheddar')
+          else if (cheese === 'Cheddar')
             setImage(CheddarGrilledTomatoT);
         } else if (sauce === 'Red') {
           if (cheeseType === 'Mozzarella')
             setImage(MozzarellaGrilledRedT);
-          else if (cheeseType === 'Cheddar')
+          else if (cheese === 'Cheddar')
             setImage(CheddarGrilledRedT);
         } else if (sauce === 'BBQ') {
           if (cheeseType === 'Mozzarella')
             setImage(MozzarellaGrilledBbqT);
-          else if (cheeseType === 'Cheddar')
+          else if (cheese === 'Cheddar')
             setImage(CheddarGrilledBbqT);
         }
       }
@@ -365,56 +376,87 @@ const Pizza = () => {
 
 
   return (
+    <div className="pizza">
+    {isFinished ? (
+      <Summary
+       size={size}
+    dough={dough}
+    sauce={sauce}
+    chicken={chicken}
+    cheese={cheese}
+    toppings={toppings}
+    price={price}
+    goToStep={goToStep}
+    resetIsFinished={resetIsFinished}
+    step={step}
+    stepContents={stepContents}
+
+      />
+    ) :(
     <div className="pizza" style={{ position: 'relative' }}>
-    <img src={image} alt="Pizza" style={{ position: 'relative', zIndex: 1 }} />
-    {toppings.map((topping, index) => (
-        <img 
-            key={index} 
-            src={toppingImages[topping]} 
-            alt={topping} 
+    {step !== 6 ?
+      <>
+        <img src={image} alt="Pizza" style={{ position: 'relative', zIndex: 1 }} />
+        {toppings.map((topping, index) => (
+          <img
+            key={index}
+            src={toppingImages[topping]}
+            alt={topping}
             style={{ position: 'absolute', top: 0, left: "10%", zIndex: 2 }}
-        />
-    ))}
-      <p style={{fontSize:"20px" , fontWeight:"bold"}}><hr />
-      
-      {`Size: ${stepContents[0].display[stepContents[0].buttons.indexOf(size)]} - Price: $${price}`}</p>
+          />
+        ))}
+      </>
+      : stepContents[step].content
+    }
+          <p style={{ fontSize: "20px", fontWeight: "bold" }}><hr />
 
-        {iconText[0] !== "Pizza Topping" ? (
-        <div className="button-group">
-          {buttons.map((button, index) => (
-            <button key={index} className="button" onClick={() => onClick(button)}>
-              {button}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div className="checkbox-group">
-          {buttons.map((button, index) => (
-            <div key={index}>
-              <input 
-                type="checkbox" 
-                id={`topping-${index}`} 
-                name={button} 
-                value={button} 
-                onChange={() => onClick(button)} 
-                checked={toppings.includes(button)}
-              />
-              <label htmlFor={`topping-${index}`}>{button}</label>
+            {`Size: ${stepContents[0].display[stepContents[0].buttons.indexOf(size)]} - Price: $${price}`}</p>
+
+          {iconText[0] !== "Pizza Topping" ? (
+            <div className="button-group">
+              {buttons.map((button, index) => (
+                <button key={index} className="button" onClick={() => onClick(button)}>
+                  {button}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button onClick={previousStep} style={{ backgroundColor: "transparent" }}><img src={leftArrow} alt="Left" /></button>
-        <figure style={{ textAlign: "center" }}>
-          <img src={icon} style={{ width: "30px", height: "30px", border: "1px solid black", borderRadius: "50%", padding: "10px", color: "black" }} alt="" />
-          <figcaption>{iconText}</figcaption>
-        </figure>
-        <button onClick={nextStep} style={{ backgroundColor: "transparent" , marginBottom:"4px" }}><img src={rightArrow} alt="Right" /></button>
+          ) : (
+            <div className="checkbox-group">
+              {buttons.map((button, index) => (
+                <div key={index}>
+                  <input
+                    type="checkbox"
+                    id={`topping-${index}`}
+                    name={button}
+                    value={button}
+                    onChange={() => onClick(button)}
+                    checked={toppings.includes(button)}
+                  />
+                  <label htmlFor={`topping-${index}`}>{button}</label>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <button onClick={previousStep} style={{ backgroundColor: "transparent" }}><img src={leftArrow} alt="Left" /></button>
+            <figure style={{ textAlign: "center" }}>
+              <img src={icon} style={{ width: "30px", height: "30px", border: "1px solid black", borderRadius: "50%", padding: "10px", color: "black" }} alt="" />
+              <figcaption>{iconText}</figcaption>
+            </figure>
+            <button onClick={nextStep} style={{ backgroundColor: "transparent", marginBottom: "4px" }}><img src={rightArrow} alt="Right" /></button>
 
-      </div>
-    </div>
-  );
+          </div>
+          <div className="step-container">
+          {stepContents && stepContents.length > 0 && <Steps step={step} stepContents={stepContents} />}
+
+
+          </div>
+        </div>
+    )}
+        </div>
+       
+       
+  )
 };
 
-export default Pizza;
+      export default Pizza;
