@@ -1,7 +1,7 @@
 import React from "react";
 import Steps from "./Steps";
 
-const Summary = ({price, size, dough, sauce, chicken, cheese, toppings , goToStep,resetIsFinished,step, stepContents = [] }) => {
+const Summary = ({price, size, dough, sauce, chicken, cheese, toppings, goToStep, resetIsFinished, handleConfirm}) => {
   
   const handleChange = (step) => {
     goToStep(step);
@@ -45,11 +45,12 @@ const Summary = ({price, size, dough, sauce, chicken, cheese, toppings , goToSte
         <span>Price:</span>
         <p>${price}</p>
       </div>
-      <button  className="summary-button" onClick={resetIsFinished}>
-        Go Back
-      </button>
+      <div style={{display:"flex" ,justifyContent: "space-between",alignItems:"center" }}>
+        <button className="summary-button" onClick={resetIsFinished}>Go Back</button>
+        <button className="summary-button" onClick={handleConfirm}>Confirm</button>
+      </div>
     </div>
   );
-  
 };
+
 export default Summary;

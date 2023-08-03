@@ -200,19 +200,49 @@ gap: 20px;
 }
 
 .summary-button {
+  padding: 5px 10px;
+  font-size: 0.8em;
   padding: 1em 2em;
   margin-top: 2em;
-  background-color: #f00;
-  color: #fff;
+  background-color:#ddd;
+  color: black;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 10px;
 }
 
 .summary-button:hover {
-  background-color: #c00;
+  background-color:#666;
 }
 .change-button {
   padding: 5px 10px;
   font-size: 0.8em;
+}
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.confirmation h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.confirmation p {
+  font-size: 20px;
+  color: #555;
+}
+
+.confirmation img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
 }

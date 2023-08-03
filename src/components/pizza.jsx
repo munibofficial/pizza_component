@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Summary from './Summary';
 import Steps from './Steps';
+import Confirmation from './Confirmation';
 
 import pizzaImage from '../assets/images/pizzasize.png'
 import rightArrow from '../assets/images/rightSlide.svg'
@@ -57,6 +58,8 @@ import blackOlives from '../assets/images/blackOlives.png';
 
 
 const Pizza = () => {
+
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const [size, setSize] = useState('S');
   const [step, setStep] = useState(0);
   const [dough, setDough] = useState('Thin');
@@ -76,6 +79,10 @@ const Pizza = () => {
     'Bell peppers': bellPeppers,
     'Black olives': blackOlives
   };
+  const handleConfirm = () => {
+    setIsConfirmed(true);
+  };
+  
   const goToStep = (stepNumber) => {
     setStep(stepNumber);
     setIcon(stepContents[stepNumber].icon);
@@ -376,22 +383,24 @@ const Pizza = () => {
 
 
   return (
-    <div className="pizza">
+   <div className="pizza">
     {isFinished ? (
-      <Summary
-       size={size}
-    dough={dough}
-    sauce={sauce}
-    chicken={chicken}
-    cheese={cheese}
-    toppings={toppings}
-    price={price}
-    goToStep={goToStep}
-    resetIsFinished={resetIsFinished}
-    step={step}
-    stepContents={stepContents}
-
-      />
+      isConfirmed ? (
+        <Confirmation />
+      ) : (
+        <Summary
+  size={size}
+  dough={dough}
+  sauce={sauce}
+  chicken={chicken}
+  cheese={cheese}
+  toppings={toppings}
+  price={price}
+  goToStep={goToStep}
+  resetIsFinished={resetIsFinished}
+  handleConfirm={handleConfirm}
+/>
+      )
     ) :(
     <div className="pizza" style={{ position: 'relative' }}>
     {step !== 6 ?
