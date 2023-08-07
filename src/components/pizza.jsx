@@ -82,31 +82,9 @@ const Pizza = ({showToast}) => {
     'Bell peppers': bellPeppers,
     'Black olives': blackOlives
   };
-  const submitOrder = () => {
-    fetch("/order", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        size: size,
-        dough: dough,
-        sauce: sauce,
-        chicken: chicken,
-        cheese: cheese,
-        toppings: toppings,
-        price: price
-      })
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
+
 
   const handleConfirm = () => {
-    submitOrder();
     setIsConfirmed(true);
     addNotification('Your pizza is not confirmed');
     showToast('Your pizza is confirmed!');
