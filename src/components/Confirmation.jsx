@@ -26,7 +26,7 @@ const Confirmation = () => {
     return (
         <div className="confirmation">
             <img src={pizzaIcon} alt="Pizza" />
-            <h2>Your pizza is on its way!</h2>
+            <h2>Order Confirmed</h2>
             <h3>Your pizza will be delivered in {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h3>
         </div>
     );

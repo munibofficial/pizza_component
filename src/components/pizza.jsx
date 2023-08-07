@@ -53,11 +53,12 @@ import mushrooms from '../assets/images/ingredients11.png';
 import bellPeppers from '../assets/images/ingredients10.png';
 import blackOlives from '../assets/images/blackOlives.png';
 
+import { useNotificationContext } from '../context/NotificationContext'; // Add this line
 
 
 
 
-const Pizza = () => {
+const Pizza = ({showToast}) => {
 
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [size, setSize] = useState('S');
@@ -71,6 +72,8 @@ const Pizza = () => {
   const [cheese, setCheese] = useState('');
   const [toppings, setToppings] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
+  const { addNotification } = useNotificationContext();
+
 
   const [price, setPrice] = useState('8');
   const toppingImages = {
@@ -79,9 +82,37 @@ const Pizza = () => {
     'Bell peppers': bellPeppers,
     'Black olives': blackOlives
   };
-  const handleConfirm = () => {
-    setIsConfirmed(true);
+  const submitOrder = () => {
+    fetch("/order", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        size: size,
+        dough: dough,
+        sauce: sauce,
+        chicken: chicken,
+        cheese: cheese,
+        toppings: toppings,
+        price: price
+      })
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
+
+  const handleConfirm = () => {
+    submitOrder();
+    setIsConfirmed(true);
+    addNotification('Your pizza is not confirmed');
+    showToast('Your pizza is confirmed!');
+
+  };
+
   
   const goToStep = (stepNumber) => {
     setStep(stepNumber);
@@ -386,7 +417,11 @@ const Pizza = () => {
    <div className="pizza">
     {isFinished ? (
       isConfirmed ? (
+        <>
         <Confirmation />
+        {/* <Pizza showToast={showToast} /> */}
+        </>
+
       ) : (
         <Summary
   size={size}
